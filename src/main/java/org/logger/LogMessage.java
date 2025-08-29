@@ -8,16 +8,18 @@ public class LogMessage {
     private final String message;
     private final LocalDate timeStamp;
     private final String className;
+    private final String threadName;
 
-    public LogMessage(LogLevel logLevel, String message, String className) {
+    public LogMessage(LogLevel logLevel, String message, String className, String threadName) {
         this.logLevel = logLevel;
         this.message = message;
         this.timeStamp = LocalDate.now();
         this.className = className;
+        this.threadName = threadName;
     }
 
     @Override
     public String toString() {
-        return timeStamp + " - [" + logLevel +"] [" + className + "] : " + message;
+        return timeStamp + " - [" + threadName + "] [" + logLevel + "] " + className + " : " + message;
     }
 }

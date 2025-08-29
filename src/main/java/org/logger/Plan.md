@@ -14,7 +14,7 @@
 ## Step 2: Core Components
 
 ### Logger API (Facade Layer)
-- Central logger class with methods for each level.
+- [x] Central logger class with methods for each level.
 
 ### Log Record / Event
 - Object containing:

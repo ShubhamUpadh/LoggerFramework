@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Logger {
     private final String className;
-    private ConcurrentL<LogMessage> logMessageList = new ArrayList<>();
+    private List<LogMessage> logMessageList = new ArrayList<>();
 
     public Logger(String simpleName) {
         this.className = simpleName;
@@ -13,7 +13,7 @@ public class Logger {
 
     public void log(LogLevel logLevel, String message){
         try {
-            LogMessage logMessage = new LogMessage(logLevel, message, className);
+            LogMessage logMessage = new LogMessage(logLevel, message, className, Thread.currentThread().getName(), true);
             System.out.println(logMessage);
             logMessageList.add(logMessage);
         } catch (Exception e) {
@@ -21,4 +21,19 @@ public class Logger {
         }
     }
 
+    public void info(String message){
+        log(LogLevel.INFO, message);
+    }
+
+    public void debug(String message){
+        log(LogLevel.DEBUG, message);
+    }
+
+    public void warn(String message){
+        log(LogLevel.WARN, message);
+    }
+
+    public void err(String message){
+        log(LogLevel.ERROR, message);
+    }
 }
