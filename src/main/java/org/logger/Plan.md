@@ -30,8 +30,8 @@
 - Allow multiple appenders at once.
 
 ### Formatter
-- Define string or JSON output format.
-- Make formatter pluggable.
+- Define string or JSON output format - Selection can be made via a 
+- Make formatter pluggable - Enter a generic format
 
 ### Filters / Level Control
 - Drop logs below configured level.
@@ -59,3 +59,8 @@
 3. Record passes through filters.
 4. Framework sends it to all active appenders.
 5. Each appender applies its formatter and outputs the log.
+
+
+## Backburner
+
+1. Make threadName optional to be displayed
