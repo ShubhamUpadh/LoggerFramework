@@ -22,4 +22,11 @@ public class LogMessage {
     public String toString() {
         return timeStamp + " - [" + threadName + "] [" + logLevel + "] " + className + " : " + message;
     }
+
+    public String toJson() {
+        return String.format(
+                "{\"timeStamp\":\"%s\", \"thread\":\"%s\", \"level\":\"%s\", \"class\":\"%s\", \"message\":\"%s\"}",
+                timeStamp, threadName, logLevel, className, message
+        );
+    }
 }
