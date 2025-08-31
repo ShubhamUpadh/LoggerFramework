@@ -7,6 +7,7 @@ public class Logger {
     private final String className;
     private final List<LogMessage> logMessageList = new ArrayList<>();
     private FileAppender fileAppender = null;
+    private final LogLevel setLogLevel = LogLevel.INFO;
     private Redacter redacter = null;
     private ConfigLoader configLoader = new ConfigLoader();
 
@@ -23,15 +24,21 @@ public class Logger {
             }
 
             LogMessage logMessage = new LogMessage(logLevel, message, className, Thread.currentThread().getName());
-            System.out.println(logMessage);
-            logMessageList.add(logMessage);
+            printLogMessage(logMessage);
+            logMessageList.add(logMessage); // add logMessage to the list irrespective of logLevel
 
             if (fileAppender != null){
-                fileAppender.append(logMessage);
+                fileAppender.append(logMessage, setLogLevel);
             }
 
         } catch (Exception e) {
             System.err.println("Logging error : " + e.getMessage());
+        }
+    }
+
+    private void printLogMessage(LogMessage logMessage){
+        if (logMessage.getLogLevel().getPrecedence() <= setLogLevel.getPrecedence()) {
+            System.out.println(logMessage);
         }
     }
 

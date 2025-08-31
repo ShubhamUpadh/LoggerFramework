@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class FileAppender {
@@ -48,19 +47,19 @@ public class FileAppender {
         return splitFileName[0] + fileSuffix + "." + splitFileName[1];
     }
 
-    public void append(LogMessage logMessage){
-        try {
-            if (outputFormat == OutputFormat.STRING) {
-                fileWriter.write(logMessage.toString() + "\n");
-                fileWriter.flush();
+    public void append(LogMessage logMessage, LogLevel setLogLevel){
+        if (logMessage.getLogLevel().getPrecedence() <= setLogLevel.getPrecedence()) {
+            try {
+                if (outputFormat == OutputFormat.STRING) {
+                    fileWriter.write(logMessage.toString() + "\n");
+                    fileWriter.flush();
+                } else {
+                    fileWriter.write(logMessage.toJson() + "\n");
+                    fileWriter.flush();
+                }
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
             }
-            else{
-                fileWriter.write(logMessage.toJson() + "\n");
-                fileWriter.flush();
-            }
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
         }
     }
-
 }
