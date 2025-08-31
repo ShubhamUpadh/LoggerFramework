@@ -25,7 +25,7 @@ public class LogMessage {
 
     public String toJson() {
         return String.format(
-                "{\"timeStamp\":\"%s\", \"thread\":\"%s\", \"level\":\"%s\", \"class\":\"%s\", \"message\":\"%s\"}",
+                "{\n\t\"timeStamp\":\"%s\",\n\t\"thread\":\"%s\",\n\t\"level\":\"%s\",\n\t\"class\":\"%s\",\n\t\"message\":\"%s\"\n}",
                 timeStamp, threadName, logLevel, className, message
         );
     }
