@@ -33,10 +33,8 @@
 <<<<<<< Updated upstream
 - Define string or JSON output format.
 - Make formatter pluggable.
-=======
 - Define string or JSON output format - Selection can be made via a [x] 
 - Make formatter pluggable - Enter a generic format []
->>>>>>> Stashed changes
 
 ### Filters / Level Control
 - Drop logs below configured level. [x]
