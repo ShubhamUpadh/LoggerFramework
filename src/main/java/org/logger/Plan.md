@@ -2,22 +2,22 @@
 
 ## Step 1: Core Requirements
 
-- Provide simple API for logging (`info()`, `warn()`, `error()`, `debug()`). [x]
-- Support multiple log levels. [x]
-- Print logs in a structured format (e.g., `timestamp - level - class - message`). [x]
-- Support at least one output destination (console). [x]
-- Ensure logging failures don’t crash the application. [x]
-- Keep performance overhead minimal. []
+-  [x] Provide simple API for logging (`info()`, `warn()`, `error()`, `debug()`).
+-  [x] Support multiple log levels.
+-  [x] Print logs in a structured format (e.g., `timestamp - level - class - message`).
+-  [x] Support at least one output destination (console). [x]
+-  [x] Ensure logging failures don’t crash the application. [x]
+-  [x] Keep performance overhead minimal. []
 
 ---
 
 ## Step 2: Core Components
 
 ### Logger API (Facade Layer)
--  Central logger class with methods for each level. [x]
+-   [x] Central logger class with methods for each level.
 
 ### Log Record / Event
-- Object containing: [x]
+- [x] Object containing: 
   - `timestamp`
   - `level`
   - `message`
@@ -30,19 +30,18 @@
 - Allow multiple appenders at once. []
 
 ### Formatter
-<<<<<<< Updated upstream
-- Define string or JSON output format.
-- Make formatter pluggable.
-- Define string or JSON output format - Selection can be made via a [x] 
-- Make formatter pluggable - Enter a generic format []
+- [x] Define string or JSON output format.
+- [x] Make formatter pluggable.
+- [x] Define string or JSON output format - Selection can be made via a [x] 
+- [] Make formatter pluggable - Enter a generic format []
 
 ### Filters / Level Control
-- Drop logs below configured level. [x]
-- Add optional sensitive data redaction. []
+- [x] Drop logs below configured level.
+- [x] Add optional sensitive data redaction.
 
 ### Configuration
-- Externalize setup (YAML/JSON/properties).
-- Support per-class/package level settings.
+- [] Externalize setup (YAML/JSON/properties).
+- [] Support per-class/package level settings.
 
 ---
 
