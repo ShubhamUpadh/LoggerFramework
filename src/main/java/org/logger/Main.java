@@ -10,5 +10,11 @@ public class Main {
             logger.setTargetFile("targetFileJson.log", OutputFormat.JSON);
             logger.log(LogLevel.INFO,"This is the value " + i);
         }
+
+        String sensitive = "This is a sensitive string - card = 123";
+
+        logger.info(sensitive);
+        logger.setRedacter("card\\s*=\\s*(\\d+)");
+        logger.info(sensitive);
     }
 }

@@ -33,11 +33,11 @@
 - [x] Define string or JSON output format.
 - [x] Make formatter pluggable.
 - [x] Define string or JSON output format - Selection can be made via a [x] 
-- [] Make formatter pluggable - Enter a generic format []
+- [ ] Make formatter pluggable - Enter a generic format
 
 ### Filters / Level Control
 - [x] Drop logs below configured level.
-- [x] Add optional sensitive data redaction.
+- [ ] Add optional sensitive data redaction.
 
 ### Configuration
 - [] Externalize setup (YAML/JSON/properties).
