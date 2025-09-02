@@ -7,6 +7,7 @@ public class Logger {
     private final String className;
     private final List<LogMessage> logMessageList = new ArrayList<>();
     private FileAppender fileAppender = null;
+    private Redacter redacter = null;
 
     public Logger(String simpleName) {
         this.className = simpleName;
@@ -14,6 +15,11 @@ public class Logger {
 
     public void log(LogLevel logLevel, String message){
         try {
+
+            if (redacter != null){
+                message = redacter.mask(message);
+            }
+
             LogMessage logMessage = new LogMessage(logLevel, message, className, Thread.currentThread().getName());
             System.out.println(logMessage);
             logMessageList.add(logMessage);
@@ -51,7 +57,8 @@ public class Logger {
         this.fileAppender = new FileAppender(fileName, outputFormat);
     }
 
-
-//    public void
+    public void setRedacter(String regex){
+        this.redacter = new Redacter(regex);
+    }
 
 }
