@@ -14,7 +14,7 @@ public class Main {
         String sensitive = "This is a sensitive string - card = 123";
 
         logger.info(sensitive);
-        logger.setRedacter("card\\s*=\\s*(\\d+)");
+//        logger.setRedacter("card\\s*=\\s*(\\d+)");
         logger.info(sensitive);
     }
 }

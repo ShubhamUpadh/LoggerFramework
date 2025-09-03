@@ -1,0 +1,17 @@
+file:
+  enabled: true
+  fileName: "logs/app.log"
+  format: "json"   # or "string"
+  level: "INFO"    # optional, can filter what gets logged to file
+
+console:
+  enabled: true
+  format: "string"
+  level: "DEBUG"
+
+redaction:
+  enabled: true
+  fields: ["password", "token", "ssn"]
+  patterns:
+    - "cardNumber=\\d{16}"
+    - "card\\s*=\\s*(\\d+)"

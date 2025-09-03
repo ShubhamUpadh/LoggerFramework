@@ -8,6 +8,7 @@ public class Logger {
     private final List<LogMessage> logMessageList = new ArrayList<>();
     private FileAppender fileAppender = null;
     private Redacter redacter = null;
+    private ConfigLoader configLoader = new ConfigLoader();
 
     public Logger(String simpleName) {
         this.className = simpleName;
@@ -16,7 +17,8 @@ public class Logger {
     public void log(LogLevel logLevel, String message){
         try {
 
-            if (redacter != null){
+            if (configLoader.isRedactionEnabled()){
+                this.redacter = new Redacter(configLoader.getRedactionPatterns());
                 message = redacter.mask(message);
             }
 
@@ -57,8 +59,8 @@ public class Logger {
         this.fileAppender = new FileAppender(fileName, outputFormat);
     }
 
-    public void setRedacter(String regex){
-        this.redacter = new Redacter(regex);
-    }
+//    public void setRedacter(String regex){
+//        this.redacter = new Redacter(regex);
+//    }
 
 }
