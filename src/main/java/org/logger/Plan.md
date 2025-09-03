@@ -61,3 +61,9 @@
 3. Record passes through filters.
 4. Framework sends it to all active appenders.
 5. Each appender applies its formatter and outputs the log.
+
+
+## Backburner
+
+1. Make threadName optional to be displayed
+2. Use factory pattern in Logger constructor ??

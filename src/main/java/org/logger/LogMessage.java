@@ -18,6 +18,10 @@ public class LogMessage {
         this.threadName = threadName;
     }
 
+    public LogLevel getLogLevel() {
+        return logLevel;
+    }
+
     @Override
     public String toString() {
         return timeStamp + " - [" + threadName + "] [" + logLevel + "] " + className + " : " + message;
