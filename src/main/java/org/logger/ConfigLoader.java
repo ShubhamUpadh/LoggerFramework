@@ -1,28 +1,5 @@
 package org.logger;
 
-//import org.yaml.snakeyaml.Yaml;
-//import java.io.InputStream;
-//import java.util.Map;
-//
-//public class ConfigLoader {
-//    private final Map<String, Object> config;
-//
-//    public ConfigLoader() {
-//        Yaml yaml = new Yaml();
-//        try (InputStream in = getClass().getClassLoader().getResourceAsStream("config.yml")) {
-//            config = yaml.load(in);
-//        } catch (Exception e) {
-//            throw new RuntimeException("Failed to load config: " + e.getMessage(), e);
-//        }
-//        System.out.println(config);
-//    }
-//
-//    public Object get(String key) {
-//        return config.get(key);
-//    }
-//
-//}
-
 import org.yaml.snakeyaml.Yaml;
 import java.io.InputStream;
 import java.util.List;
@@ -64,4 +41,30 @@ public class ConfigLoader {
         Map<String, Object> redaction = (Map<String, Object>) config.get("redaction");
         return (List<String>) redaction.get("patterns");
     }
+
+    @SuppressWarnings("unchecked")
+    public boolean isFileAppendEnabled(){
+        Map<String, Object> file = (Map<String, Object>) config.get("file");
+        return Boolean.TRUE.equals(file.get("enabled"));
+    }
+
+    @SuppressWarnings("unchecked")
+    public String getFileName(){
+        Map<String, Object> file = (Map<String, Object>) config.get("file");
+        return (String) file.get("fileName");
+    }
+
+    @SuppressWarnings("unchecked")
+    public LogLevel getFilterLevel(){
+        Map<String, Object> file = (Map<String, Object>) config.get("file");
+        return (LogLevel) file.get("level");
+    }
+
+    @SuppressWarnings("unchecked")
+    public OutputFormat getOutputFormat(){
+        Map<String, Object> file = (Map<String, Object>) config.get("file");
+        return (OutputFormat) file.get("format");
+    }
+
+
 }

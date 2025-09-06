@@ -9,7 +9,9 @@ public class Logger {
     private FileAppender fileAppender = null;
     private final LogLevel setLogLevel = LogLevel.INFO;
     private Redacter redacter = null;
-    private ConfigLoader configLoader = new ConfigLoader();
+    private final ConfigLoader configLoader = new ConfigLoader();
+    private final LogQueue logQueue = new LogQueue(100);
+
 
     public Logger(String simpleName) {
         this.className = simpleName;
@@ -18,12 +20,18 @@ public class Logger {
     public void log(LogLevel logLevel, String message){
         try {
 
+            if (!logQueue.isAvailableForDebugInfo() && logLevel.getPrecedence() > LogLevel.WARN.getPrecedence()){
+                return;
+            }
+
             if (configLoader.isRedactionEnabled()){
                 this.redacter = new Redacter(configLoader.getRedactionPatterns());
                 message = redacter.mask(message);
             }
 
             LogMessage logMessage = new LogMessage(logLevel, message, className, Thread.currentThread().getName());
+
+            logQueue.addLog(logMessage);
             printLogMessage(logMessage);
             logMessageList.add(logMessage); // add logMessage to the list irrespective of logLevel
 
