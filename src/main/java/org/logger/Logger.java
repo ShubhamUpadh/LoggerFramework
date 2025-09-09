@@ -9,7 +9,11 @@ public class Logger {
     private FileAppender fileAppender = null;
     private final LogLevel setLogLevel = LogLevel.INFO;
     private Redacter redacter = null;
-    private ConfigLoader configLoader = new ConfigLoader();
+    private final ConfigLoader configLoader = new ConfigLoader();
+    private final AppConfig appConfig = configLoader.getConfig();
+    private final LogQueue logQueue = new LogQueue(100);
+    private LogDispatcher logDispatcher = new LogDispatcher(logQueue);
+
 
     public Logger(String simpleName) {
         this.className = simpleName;
@@ -18,18 +22,27 @@ public class Logger {
     public void log(LogLevel logLevel, String message){
         try {
 
-            if (configLoader.isRedactionEnabled()){
-                this.redacter = new Redacter(configLoader.getRedactionPatterns());
+            if (!logQueue.isAvailableForDebugInfo() && logLevel.getPrecedence() > LogLevel.WARN.getPrecedence()){
+                return;
+            }
+
+            if (appConfig.getRedaction().isEnabled()){
+                this.redacter = new Redacter(appConfig.getRedaction().getPatterns());
                 message = redacter.mask(message);
             }
 
             LogMessage logMessage = new LogMessage(logLevel, message, className, Thread.currentThread().getName());
-            printLogMessage(logMessage);
-            logMessageList.add(logMessage); // add logMessage to the list irrespective of logLevel
 
-            if (fileAppender != null){
-                fileAppender.append(logMessage, setLogLevel);
-            }
+            logQueue.addLog(logMessage);
+
+            Thread worker = new Thread(logDispatcher);
+            worker.start();
+//            printLogMessage(logMessage);
+//            logMessageList.add(logMessage); // add logMessage to the list irrespective of logLevel
+//
+//            if (fileAppender != null){
+//                fileAppender.append(logMessage, setLogLevel);
+//            }
 
         } catch (Exception e) {
             System.err.println("Logging error : " + e.getMessage());

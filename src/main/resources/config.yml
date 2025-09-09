@@ -1,13 +1,13 @@
 file:
   enabled: true
-  fileName: "logs/app.log"
-  format: "json"   # or "string"
-  level: "INFO"    # optional, can filter what gets logged to file
+  fileName: "app.log"
+  format: JSON   # or "string"
+  level: INFO    # optional, can filter what gets logged to file
 
 console:
   enabled: true
-  format: "string"
-  level: "DEBUG"
+  format: STRING
+  level: DEBUG
 
 redaction:
   enabled: true
