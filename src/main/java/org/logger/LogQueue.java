@@ -35,6 +35,4 @@ public class LogQueue {
     public boolean isEmpty(){
         return this.logQueue.isEmpty();
     }
-
-
 }

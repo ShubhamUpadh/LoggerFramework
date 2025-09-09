@@ -6,13 +6,14 @@ public class LogDispatcher implements Runnable{
     private volatile boolean running = true;
     private FileAppender fileAppender = null;
     private final ConfigLoader configLoader = new ConfigLoader();
+    private final AppConfig appConfig = configLoader.getConfig();
     private LogLevel filterLogLevel = null;
 
     public LogDispatcher(LogQueue logQueue){
         this.logQueue = logQueue;
-        if (configLoader.isFileAppendEnabled()) {
-            this.fileAppender = new FileAppender(configLoader.getFileName(), configLoader.getOutputFormat());
-            this.filterLogLevel = configLoader.getFilterLevel();
+        if (appConfig.getFile().isEnabled()) {
+            this.fileAppender = new FileAppender(appConfig.getFile().getFileName(), appConfig.getFile().getFormat());
+            this.filterLogLevel = appConfig.getFile().getLevel();
         }
     }
 

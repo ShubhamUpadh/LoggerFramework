@@ -10,7 +10,9 @@ public class Logger {
     private final LogLevel setLogLevel = LogLevel.INFO;
     private Redacter redacter = null;
     private final ConfigLoader configLoader = new ConfigLoader();
+    private final AppConfig appConfig = configLoader.getConfig();
     private final LogQueue logQueue = new LogQueue(100);
+    private LogDispatcher logDispatcher = new LogDispatcher(logQueue);
 
 
     public Logger(String simpleName) {
@@ -24,20 +26,23 @@ public class Logger {
                 return;
             }
 
-            if (configLoader.isRedactionEnabled()){
-                this.redacter = new Redacter(configLoader.getRedactionPatterns());
+            if (appConfig.getRedaction().isEnabled()){
+                this.redacter = new Redacter(appConfig.getRedaction().getPatterns());
                 message = redacter.mask(message);
             }
 
             LogMessage logMessage = new LogMessage(logLevel, message, className, Thread.currentThread().getName());
 
             logQueue.addLog(logMessage);
-            printLogMessage(logMessage);
-            logMessageList.add(logMessage); // add logMessage to the list irrespective of logLevel
 
-            if (fileAppender != null){
-                fileAppender.append(logMessage, setLogLevel);
-            }
+            Thread worker = new Thread(logDispatcher);
+            worker.start();
+//            printLogMessage(logMessage);
+//            logMessageList.add(logMessage); // add logMessage to the list irrespective of logLevel
+//
+//            if (fileAppender != null){
+//                fileAppender.append(logMessage, setLogLevel);
+//            }
 
         } catch (Exception e) {
             System.err.println("Logging error : " + e.getMessage());
